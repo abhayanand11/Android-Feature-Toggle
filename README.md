@@ -1,4 +1,4 @@
-Android-Feature-Toggle
+**Android-Feature-Toggle**
 
 Projects demonstrates how to toggle features for apps (two or more) having common functionality.
 
