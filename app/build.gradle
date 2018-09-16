@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    // app features
+    def FEATURE_EMIRATES_ID_LOGIN = "FEATURE_EMIRATES_ID_LOGIN"
+    def FEATURE_BIOMETRIC_LOGIN = "FEATURE_BIOMETRIC_LOGIN"
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "in.abhayanand.android.android_feature_toggle"
@@ -9,17 +13,45 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionNameSuffix 'version'
+        buildConfigField("Boolean", "FEATURE_EMIRATES_ID_LOGIN", "false")
+        buildConfigField("Boolean", "FEATURE_BIOMETRIC_LOGIN", "false")
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        QA {
+        }
+    }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        app {
+            targetSdkVersion 25
+            minSdkVersion 15
+            applicationId 'in.abhayanand.android.android_feature_toggle.app'
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 1
+            versionName '1.0'
+            buildConfigField("Boolean", "FEATURE_BIOMETRIC_LOGIN", "true")
+        }
+        branch {
+            targetSdkVersion 25
+            minSdkVersion 15
+            applicationId 'in.abhayanand.android.android_feature_toggle.branch'
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 1
+            versionName '1.0'
+            buildConfigField("Boolean", "FEATURE_EMIRATES_ID_LOGIN", "true")
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
